@@ -1,6 +1,6 @@
 # Phonebook
 
-A phonebook app made for a fullstack bootcamp.
+A phonebook app made for a [fullstack bootcamp](https://fullstackopen.com/es/).
 
 ## Tech stack
 
@@ -13,7 +13,7 @@ A phonebook app made for a fullstack bootcamp.
 
     cd backend
     npm install
-    npm run dev
+    npm start
 
 The API runs on http://localhost:3001
 
