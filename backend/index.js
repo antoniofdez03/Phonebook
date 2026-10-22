@@ -5,10 +5,9 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(morganLogger)
 app.use(express.static('dist'))
 app.use(cors())
-
-app.use(morganLogger)
 
 let persons = [
     {
@@ -32,10 +31,6 @@ let persons = [
       id: 4
     }
   ]
-
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
-})
 
 app.get('/info', (request, response) => {
     response.send(
@@ -86,6 +81,20 @@ app.post('/api/persons', (request, response) => {
     response.status(201).json(newPerson)
 })
 
+app.put('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const { name, number } = request.body
+
+    const person = persons.find(p => p.id === id)
+    if (!person)
+        return response.status(404).end()
+
+    const updatedPerson = { ...person, name, number }
+    persons = persons.map(p => p.id !== id ? p : updatedPerson)
+
+    response.json(updatedPerson)
+})
+
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id != id)
@@ -93,7 +102,7 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
