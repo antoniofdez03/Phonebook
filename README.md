@@ -1,6 +1,6 @@
 # Phonebook
 
-A phonebook app made for a [fullstack bootcamp]([https://url-del-enlace.com](https://fullstackopen.com/es/)).
+A phonebook app made for a [fullstack bootcamp](https://fullstackopen.com/es/).
 
 ## Tech stack
 
