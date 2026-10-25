@@ -16,7 +16,7 @@ const PersonForm = ({values, handlers}) => {
         name: <input type='text' onChange={handlers.nameChange} value={values.newName}/>
       </div>
       <div>
-        number: <input type='number' onChange={handlers.numberChange} value={values.newNumber} />
+        number: <input type='text' placeholder='040-1234567' onChange={handlers.numberChange} value={values.newNumber} />
       </div>
       <div>
         <button type="submit">add</button>
@@ -52,11 +52,30 @@ const Persons = ({persons, filter, deleteId}) => {
   )
 }
 
+const Notification = ({ message }) => {
+  if (!message) return null
+
+  return (
+    <div style={{
+      color: 'red',
+      background: '#eee',
+      border: '2px solid red',
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 10,
+      fontSize: 18
+    }}>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     getAllNumbers()
@@ -106,9 +125,14 @@ const App = () => {
         setNewNumber('')
       })
       .catch(error => {
-        console.error(error)
+        showError(error.response?.data?.error ?? 'Unexpected error')
         setError('La API ha petado')
       })
+  }
+
+  const showError = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => setErrorMessage(null), 5000)
   }
 
   const deleteId = (id) => {
@@ -121,6 +145,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter handleFilterChange={handleFilterChange}/>
       <h2>Add a new</h2>
       <PersonForm 
