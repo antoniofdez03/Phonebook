@@ -5,7 +5,8 @@ A phonebook app made for a [fullstack bootcamp](https://fullstackopen.com/es/).
 ## Tech stack
 
 - Frontend: React + Vite
-- Backend: Node.js + Express
+- Backend: Node.js + Express + MongoDB (Mongoose)
+- Tests: Jest + Supertest
 
 ## Run locally
 
@@ -32,3 +33,18 @@ The app runs on http://localhost:5173
 - `POST /api/persons`: add a person
 - `PUT /api/persons/:id`: update a person
 - `DELETE /api/persons/:id`: delete a person
+
+## Tests
+
+The backend has integration tests written with [Jest](https://jestjs.io/) and [Supertest](https://github.com/ladjs/supertest).
+
+### Run
+
+    cd backend
+    npm test
+
+### What is covered
+
+- `GET /api/persons`: returns JSON and the expected number of persons
+- `POST /api/persons`: adds valid persons, rejects missing name, missing number or invalid number
+- `DELETE /api/persons/:id`: deletes an existing person, rejects a malformed id
